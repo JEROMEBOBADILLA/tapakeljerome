@@ -58,7 +58,7 @@ Node *insertAtTheBeginning(string data, Node *head){
 
     return head;
 }
-string insertAtfter(string after, string data,Node *head){
+string insertAfter(string after, string data,Node *head){
     Node *temp = new Node;
     temp = head;
 
@@ -75,10 +75,84 @@ string insertAtfter(string after, string data,Node *head){
 
     return "An new node has been added after " + after + "\n";
 }
+
+string deleteAtEnd(Node *head){
+    if(head == NULL){
+        return "The linked list is empty \n";
+
+    }
+
+    if(head->link ==NULL){
+        delete head;
+        return "The head has been deleted \n";
+    }
+
+    Node *temp = new Node;
+    temp = head;
+
+    while(temp->link->link !=NULL){
+        temp = temp->link;
+    }
+
+    temp->link = NULL;
+
+    return "A node has been deleted at the end \n";
+}
+
+Node *deleteFromBeginning(Node *head){
+    if(head == NULL){
+        cout << "The linked list is empty \n" <<endl;
+        return NULL;
+    }
+
+    if(head->link == NULL){
+        delete head;
+    }
+
+    head = head->link;
+
+    cout <<"A node has been delete from the beginning \n"  << endl;
+    
+    return head;
+}
+
+Node *deleteFromGivenNode(string givenNode, Node *head){
+    if(head == NULL){
+        cout << "The link list is empty. \n" <<endl;
+        return NULL;
+    }
+
+    if(head->songName.compare(givenNode) == 0){
+        head = deleteFromBeginning(head);
+        cout << "The Node" + givenNode + "has been deleted. \n" << endl;
+        return head;
+    }
+
+    Node *temp = new Node;
+    Node *next = new Node;
+    temp = head;
+    next = temp->link;
+
+    while(next->songName.compare(givenNode) !=0){
+        if(temp == NULL){
+            cout << "No such node exist. \n" <<endl;
+            return head;
+        }
+        next = next->link;
+        temp = temp->link;
+    }
+
+    temp->link = next->link;
+    cout << "The Node"+ givenNode + "has been deleted. \n" <<endl;
+    return head;
+
+
+}
+
 int main(){
     Node *head = createNode("Sanctuary by Joji");
     head = inserAtEnd("Sunday Morning by Maroon 5", head);
-    head = inserAtEnd("Blue", head);
+    head = inserAtEnd("Blue by Yung kai", head);
     head = inserAtEnd("No.1 Party Anthem", head);
     head = insertAtTheBeginning("153 by Dionela", head);
     head = insertAtTheBeginning("You&I by One Direction", head);
@@ -86,6 +160,21 @@ int main(){
     head = insertAtTheBeginning("Umaasa by Calein", head);
     traverse(head);
    
+string result = insertAfter("153 by Dionela", "Pusong Bato", head);
+cout<< result;
+string result1 = insertAfter("You&I by One Direction", "Huling Sandali", head);
+cout<< result1;
+string result2 = insertAfter("La La La by Nougthy Boy,Sam Smith", "Palagi", head);
+cout<< result2;
+
+string END = deleteAtEnd(head);
+cout << END << endl;
+head = deleteFromBeginning(head);
+head = deleteFromGivenNode("Blue by Yung kai",head);
+
+
+traverse(head);
+
 
 
     return 0;
